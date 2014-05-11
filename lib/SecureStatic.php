@@ -38,9 +38,9 @@ class Secure {
 	public static function cifrate($algorithm, $value){
 		if(!self::hasAlgorithms($algorithm)){
 			return false;
-    	}
+		}
     
-    	return hash(strtolower($algorithm), $value);
+		return hash(strtolower($algorithm), $value);
 	}
   
   	public static function cifrateFile($algorithm, $file){
