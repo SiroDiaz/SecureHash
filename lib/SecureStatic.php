@@ -23,14 +23,14 @@ class Secure {
 		$find = false;
     
 		while(!$find && $algorithmsLength >= 0){
-      		if(($algorithm == self::$algorithms[$algorithmsLength])){
-        		$find = true;
-		  	}else{
-  	    		$algorithmsLength--;
-		  	}
+			if(($algorithm == self::$algorithms[$algorithmsLength])){
+				$find = true;
+			}else{
+				$algorithmsLength--;
+			}
 		}
     
-    	return ($algorithmsLength >= 0) ? true : false;
+		return ($algorithmsLength >= 0) ? true : false;
 	}
 
   	############################################################
