@@ -8,11 +8,11 @@
 
 require __DIR__ .'/../lib/SecureStatic.php';
 
-use Secure\SecureStatic\Secure as SA;
+use Secure\SecureStatic\SecureHash as SH;
 
 // sha512
-echo SA::cifrate('sha512', 'Hello World!') ."\n";
+echo SH::cifrate('sha512', 'Hello World!') ."\n";
 // md5
-echo SA::cifrate('md5', 'Hello World!') ."\n";
+echo SH::cifrate('md5', 'Hello World!') ."\n";
 // ripemd160
-echo SA::cifrate('ripemd160', 'Hello World!') ."\n";
+echo SH::cifrate('ripemd160', 'Hello World!') ."\n";
