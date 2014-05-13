@@ -13,17 +13,17 @@ class SecureHash {
 	/**
 	 * Initializes a Hash object and assigns both hash algorithm and value
 	 * or file name to be hashed. $algo is modified to a lower case string prior to assignment.
-	 * Throws an InvalidArgumentException if the first argument is not a string
+	 * Throws an Exception if the first argument is not a string
 	 *
 	 * @param  string  $algo The algorithm to be used
 	 * @param  mixed   $val  The data or file name(including the route) to be hashed
-	 * @throws InvalidArgumentException if algorithm given is not a string
+	 * @throws Exception if algorithm given is not a string
 	 */
 
 	public function __construct($algo, $val){
 
 		if(!is_string($algo)){
-			throw new Exception("The algorithm must be a string");
+			throw new Exception('The algorithm must be a string');
 		}
 
 		$this->algo  = strtolower($algo);
@@ -118,7 +118,6 @@ class SecureHash {
 	 *
 	 * @param void
 	 * @return string The hash value
-	 * @throws Exception message if the file requested does not exists
 	 */
 
 	public function cifrate(){
@@ -148,7 +147,7 @@ class SecureHash {
 		
 		try{
 			if(!file_exists($this->value)){
-				throw new Exception("The file requested does not exists");
+				throw new Exception('The file requested does not exists');
 			}else{
 				$fileHandler = fopen($this->value, 'rb'); 
 				$this->text = fread($fileHandler, filesize($this->value));
