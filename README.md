@@ -1,8 +1,12 @@
 # SecureHash
 
-Class to encrypt data easily with PHP
+PHP Class to encrypt data easily with hash algorithms
 
-requires PHP 5 >= 5.1.2 or PECL hash >= 1.1
+requires PHP 5 >= 5.3.0
+
+## Composer
+
+	$ composer require securehash/securehash:dev-master
 
 ## Quick Start and Examples
 

@@ -1,26 +1,26 @@
 {
-    "name": "securehash/securehash",
-    "description": "Class to encrypt data easily with hash algorithms",
-    "keywords": [
-        "hash", "algorithms", "string", "data", "utility", "methods",
-        "files", "helpers", "url"
-    ],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Siro Diaz Palazon",
-            "email": "siro_diaz@yahoo.com"
-        }
-    ],
-    "autoload": {
-        "classmap": ["lib/"]
-    },
-    "minimum-stability": "stable",
-    "require": {
+	"name": "securehash/securehash",
+	"description": "Class to encrypt data easily with hash algorithms",
+	"keywords": [
+		"hash", "algorithms", "string", "data", "utility", "methods",
+		"files", "helpers", "url"
+	],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Siro Diaz Palazon",
+			"email": "siro_diaz@yahoo.com"
+		}
+	],
+	"autoload": {
+		"classmap": ["lib/"]
+	},
+	"minimum-stability": "stable",
+	"require": {
 		"php": ">=5.3.0"
-    },
-    "support": {
-        "issues": "https://github.com/SiroDiaz/SecureHash/issues",
-        "source": "https://github.com/SiroDiaz/SecureHash"
-    }
+	},
+	"support": {
+		"issues": "https://github.com/SiroDiaz/SecureHash/issues",
+		"source": "https://github.com/SiroDiaz/SecureHash"
+	}
 }
