@@ -26,7 +26,7 @@ class SecureHash {
 			throw new Exception('The algorithm must be a string');
 		}
 
-		$this->algo  = strtolower($algo);
+		$this->algo  = trim(strtolower($algo));
 		$this->value = $val;
 		$this->algos = $this->getAlgorithms();
 
@@ -87,7 +87,7 @@ class SecureHash {
 	 */
 
 	public function setAlgo($algo){
-		$this->algo = strtolower($algo);
+		$this->algo = trim(strtolower($algo));
 	}
 
 	/**
