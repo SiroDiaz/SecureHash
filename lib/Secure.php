@@ -183,13 +183,72 @@ class SecureHash {
 				throw new Exception('The url requested seems to be invalid');
 			}else{
 				$this->text = file_get_contents($this->value);
-				
+
 				return hash($this->algo, $this->text);
 			}
 		}catch(Exception $e){
 			exit($e->getMessage() ."\n");
 		}
 	}
+
+	/**
+	 * Returns the hashed values or only or a hashed value
+	 * in case of the array.
+	 *
+	 * @param mixed $values An array containing diffent types of variables
+	 * 				to be hashed or a string(not recommended)
+	 * @return mixed $data array if there is at least more than one
+	 *			array element or a string if pass a string variable
+	 * @throws Exception message if pass an empty array
+	 */
+
+	public static function cifrateMultiple($values){}
+
+	/**
+	 * Returns the hashed array of files.
+	 *
+	 * @param mixed  $files The files (including the directory) to be hashed
+	 *					or a string if a string was passed(not recommended)
+	 * @return mixed The hash value
+	 * @throws Exception message if the file requested does not exists
+	 *			or if the $files variable is a string
+	 */
+
+	public function cifrateMultipleFiles($files){}
+
+	########################################################################
+
+	public function cifrateMultipleUrls($urls){}
+
+	/**
+	 * Compare two variables and check if they are equal or not
+	 *
+	 * @param mixed  $val1		The first value to compare
+	 * @param mixed  $val2		The second value to compare
+	 * @return bool true if the variables are equals or false if not
+	 */
+
+	public static function compare($val1, $val2){}
+
+	/**
+	 * Compare two files and check if they are equal or not
+	 *
+	 * @param mixed  $val1		The first file to compare
+	 * @param mixed  $val2		The second file to compare
+	 * @return bool true if the files are equals or false if not
+	 */
+
+	public function compareFiles($file1, $file2){}
+
+	/**
+	 * Compare two Urls and check if they are equal or not
+	 *
+	 * @param mixed  $val1		The first url to compare
+	 * @param mixed  $val2		The second url to compare
+	 * @return bool true if the urls are equals or false if not
+	 */
+
+	public function compareUrls($url1, $url2){}
   
 }
 

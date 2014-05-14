@@ -48,10 +48,10 @@ require 'SessionStatic.php';
 use Secure\SecureStatic\SecureHash as SH;
 
 $jqueryGoogle = 'http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js';
-$jqueryjQuery = 'http://code.jquery.com/jquery-2.1.1.min.js'
+$jqueryjQuery = 'http://code.jquery.com/jquery-2.1.1.min.js';
 
 // true if are equals, false if not
-var_dump(SH::compareUrls('ripped160', jqueryGoogle, jqueryjQuery));
+var_dump(SH::compareUrls('ripped160', $jqueryGoogle, $jqueryjQuery));
 ```
 
 
