@@ -124,8 +124,8 @@ class SecureHash {
 		if(!$this->hasAlgorithms()){
 			return false;
 		}
-    	
-    	if(is_array($this->value) || is_object($this->value)){
+	
+		if(is_array($this->value) || is_object($this->value)){
 			return hash($this->algo, serialize($this->value));
 		}
 		
@@ -152,6 +152,38 @@ class SecureHash {
 				$fileHandler = fopen($this->value, 'rb'); 
 				$this->text = fread($fileHandler, filesize($this->value));
 				fclose($fileHandler);
+				return hash($this->algo, $this->text);
+			}
+		}catch(Exception $e){
+			exit($e->getMessage() ."\n");
+		}
+	}
+
+	/**
+	 * Returns the hashed url data downloaded.
+	 *
+	 * @param void
+	 * @return string The hash value
+	 * @throws Exception message if the file requested does not exists
+	 *			or if the $file variable is not a string
+	 */
+
+	public function cifrateUrl(){
+		if(!$this->hasAlgorithms()){
+			return false;
+		}
+
+		try{
+			
+			if(!is_string($this->value)){
+				throw new Exception('String parameters only');
+			}
+
+			if(!filter_var($this->value, FILTER_VALIDATE_URL)){
+				throw new Exception('The url requested seems to be invalid');
+			}else{
+				$this->text = file_get_contents($this->value);
+				
 				return hash($this->algo, $this->text);
 			}
 		}catch(Exception $e){
