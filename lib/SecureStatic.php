@@ -140,7 +140,7 @@ class SecureHash {
 	 * in case of the array.
 	 *
 	 * @param string $algorithm The hash algorithm to be used
-	 * @param mixed $values An array containing diffent types of variables
+	 * @param mixed $values 	An array containing diffent types of variables
 	 * 				to be hashed or a string(not recommended)
 	 * @return mixed $data array if there is at least more than one
 	 *			array element or a string if pass a string variable
@@ -180,7 +180,7 @@ class SecureHash {
 	 * Returns the hashed array of files.
 	 *
 	 * @param string $algorithm The hash algorithm to be used
-	 * @param mixed  $files The files (including the directory) to be hashed
+	 * @param mixed  $files 	The files (including the directory) to be hashed
 	 *					or a string if a string was passed(not recommended)
 	 * @return mixed The hash value
 	 * @throws Exception message if the file requested does not exists
@@ -188,44 +188,80 @@ class SecureHash {
 	 */
 
 	public static function cifrateMultipleFiles($algorithm, $files){
+		try{
+			if(is_array($files) && count($files) > 1){
 
-		if(is_array($files) && count($files) > 1){
+				$data = array();
+				$result = null;
 
-			$data = array();
-			$result = null;
-
-			foreach($files as $file){
-				$result = self::cifrateFile($algorithm, $file);
-				if(is_string($result)){
-					$data[] = $result;
-				}else{
-					return false;
+				foreach($files as $file){
+					$result = self::cifrateFile($algorithm, $file);
+					if(is_string($result)){
+						$data[] = $result;
+					}else{
+						return false;
+					}
 				}
+
+				return $data;
+			}elseif(is_array($files) && count($files) == 1){
+				return self::cifrateFile($algorithm, $files[0]);
+			}elseif(is_array($files) && empty($files)){
+				throw new Exception('You must provide a non empty array');
+			}else{
+				return self::cifrateFile($algorithm, $files);
 			}
-
-			return $data;
-		}elseif(is_array($files) && count($files) == 1){
-			return self::cifrateFile($algorithm, $files[0]);
-		}elseif(is_array($files) && empty($files)){
-			throw new Exception('You must provide a non empty array');
-		}else{
-			return self::cifrateFile($algorithm, $files);
+		}catch(Exception $e){
+			exit($e->getMessage() ."\n");
 		}
-
 	}
 
-	########################################################################
+	/**
+	 * Returns the hashed array of files.
+	 *
+	 * @param string $algorithm The hash algorithm to be used
+	 * @param mixed  $urls 		The urls to be hashed
+	 *					or a string if a string was passed(not recommended)
+	 * @return mixed The hash value
+	 * @throws Exception message if the file requested does not exists
+	 *			or if the $urls variable is a string
+	 */
 
 	public static function cifrateMultipleUrls($algorithm, $urls){
+		try{
+			if(is_array($urls) && count($urls) > 1){
 
+				$data = array();
+				$result = null;
+
+				foreach($urls as $url){
+					$result = self::cifrateUrl($algorithm, $url);
+					if(is_string($result)){
+						$data[] = $result;
+					}else{
+						return false;
+					}
+				}
+
+				return $data;
+			}elseif(is_array($urls) && count($urls) == 1){
+				return self::cifrateUrl($algorithm, $urls[0]);
+			}elseif(is_array($urls) && empty($urls)){
+				throw new Exception('You must provide a non empty array');
+			}else{
+				return self::cifrateUrl($algorithm, $urls);
+			}
+		}catch(Exception $e){
+			exit($e->getMessage() ."\n");
+		}
 	}
 
 	/**
 	 * Compare two variables and check if they are equal or not
 	 *
 	 * @param string $algorithm The hash algorithm to be used
-	 * @param mixed  $val1		The first value to compare
-	 * @param mixed  $val2		The second value to compare
+	 * @param string $val1		The first value to compare
+	 * @param string $val2		The second value to compare
 	 * @return bool true if the variables are equals or false if not
 	 */
 
@@ -237,8 +273,8 @@ class SecureHash {
 	 * Compare two files and check if they are equal or not
 	 *
 	 * @param string $algorithm The hash algorithm to be used
-	 * @param mixed  $val1		The first file to compare
-	 * @param mixed  $val2		The second file to compare
+	 * @param string $file1		The first file to compare
+	 * @param string $file2		The second file to compare
 	 * @return bool true if the files are equals or false if not
 	 */
 
@@ -250,8 +286,8 @@ class SecureHash {
 	 * Compare two Urls and check if they are equal or not
 	 *
 	 * @param string $algorithm The hash algorithm to be used
-	 * @param mixed  $val1		The first url to compare
-	 * @param mixed  $val2		The second url to compare
+	 * @param string $url1		The first url to compare
+	 * @param string $url2		The second url to compare
 	 * @return bool true if the urls are equals or false if not
 	 */
 

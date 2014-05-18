@@ -15,12 +15,12 @@ class SecureHash {
 	 * or file name to be hashed. $algo is modified to a lower case string prior to assignment.
 	 * Throws an Exception if the first argument is not a string
 	 *
-	 * @param  string  $algo The algorithm to be used
-	 * @param  mixed   $val  The data or file name(including the route) to be hashed
+	 * @param  string  $algo The algorithm to be used (default md5)
+	 * @param  mixed   $val  The data or file name(including the route) to be hashed (default '')
 	 * @throws Exception if algorithm given is not a string
 	 */
 
-	public function __construct($algo, $val){
+	public function __construct($algo = 'md5', $val = ''){
 
 		if(!is_string($algo)){
 			throw new Exception('The algorithm must be a string');
@@ -29,8 +29,6 @@ class SecureHash {
 		$this->algo  = trim(strtolower($algo));
 		$this->value = $val;
 		$this->algos = $this->getAlgorithms();
-
-		return $this;
 	}
 
 	public function __toString(){
@@ -202,7 +200,37 @@ class SecureHash {
 	 * @throws Exception message if pass an empty array
 	 */
 
-	public static function cifrateMultiple($values){}
+	public function cifrateMultiple($values){
+		try{
+			if(is_array($values) && count($values) > 1){
+				
+				$data = array();
+				$result = null;
+
+				foreach ($values as $value) {
+					$this->setValue($value);
+					$result = $this->cifrate();
+					if(is_string($result)){
+						$data[] = $result;
+					}else{
+						return false;
+					}
+				}
+
+				return $data;
+			}elseif(is_array($values) && count($values) == 1){
+				$this->setValue($values[0]);
+				return $this->cifrate();
+			}elseif(is_array($values) && empty($values)){
+				throw new Exception('You must provide a non empty array');
+			}else{
+				$this->setValue($values);
+				return $this->cifrate();
+			}
+		}catch(Exception $e){
+			exit($e->getMessage() ."\n");
+		}
+	}
 
 	/**
 	 * Returns the hashed array of files.
@@ -214,41 +242,147 @@ class SecureHash {
 	 *			or if the $files variable is a string
 	 */
 
-	public function cifrateMultipleFiles($files){}
+	public function cifrateMultipleFiles($files){
+		try{
+			if(is_array($files) && count($files) > 1){
 
-	########################################################################
+				$data = array();
+				$result = null;
 
-	public function cifrateMultipleUrls($urls){}
+				foreach($files as $file){
+					if(!is_file($file)){
+						return false;
+					}
+					$this->setValue($file);
+					$result = $this->cifrateFile();
+					if(is_string($result) && !empty($result)){
+						$data[] = $result;
+					}else{
+						return false;
+					}
+				}
+
+				return $data;
+			}elseif(is_array($files) && count($files) == 1){
+				$this->setValue($files[0]);
+				return $this->cifrateFile();
+			}elseif(is_array($files) && empty($files)){
+				throw new Exception('You must provide a non empty array');
+			}else{
+				$this->setValue($files);
+				return $this->cifrateFile($files);
+			}
+		}catch(Exception $e){
+			exit($e->getMessage() ."\n");
+		}
+
+	}
+
+	/**
+	 * Returns the hashed array of urls.
+	 *
+	 * @param mixed  $urls The urls to be hashed
+	 *					or a string if a string was passed(not recommended)
+	 * @return mixed The hash value
+	 * @throws Exception message if the url requested seems to be invalid
+	 */
+
+	public function cifrateMultipleUrls($urls){
+		try{
+			if(is_array($urls) && count($urls) > 1){
+
+				$data = array();
+				$result = null;
+
+				foreach($urls as $url){
+					$this->setValue($url);
+					$result = $this->cifrateUrl();
+					if(is_string($result) && !empty($result)){
+						$data[] = $result;
+					}else{
+						return false;
+					}
+				}
+
+				return $data;
+			}elseif(is_array($urls) && count($urls) == 1){
+				$this->setValue($urls[0]);
+				return $this->cifrateUrl();
+			}elseif(is_array($urls) && empty($urls)){
+				throw new Exception('You must provide a non empty array');
+			}else{
+				$this->setValue($urls);
+				return $this->cifrateUrl($urls);
+			}
+		}catch(Exception $e){
+			exit($e->getMessage() ."\n");
+		}
+	}
 
 	/**
 	 * Compare two variables and check if they are equal or not
 	 *
 	 * @param mixed  $val1		The first value to compare
 	 * @param mixed  $val2		The second value to compare
+	 * @param string $algorithm The algorithm to use
 	 * @return bool true if the variables are equals or false if not
 	 */
 
-	public static function compare($val1, $val2){}
+	public function compare($val1, $val2, $algorithm = ''){
+		if(!empty($algorithm)){
+			$this->setAlgo($algorithm);
+		}
+
+		$this->setValue($val1);
+		$val1 = $this->cifrate();
+		$this->setValue($val2);
+		$val2 = $this->cifrate();
+		
+		return ($val1 == $val2) ? true : false;
+	}
 
 	/**
 	 * Compare two files and check if they are equal or not
 	 *
-	 * @param mixed  $val1		The first file to compare
-	 * @param mixed  $val2		The second file to compare
+	 * @param mixed  $file1		The first file to compare
+	 * @param mixed  $file2		The second file to compare
+	 * @param string $algorithm The algorithm to use
 	 * @return bool true if the files are equals or false if not
 	 */
 
-	public function compareFiles($file1, $file2){}
+	public function compareFiles($file1, $file2, $algorithm = ''){
+		if(!empty($algorithm)){
+			$this->setAlgo($algorithm);
+		}
+
+		$this->setValue($file1);
+		$file1 = $this->cifrateFile();
+		$this->setValue($file2);
+		$file2 = $this->cifrateFile();
+		
+		return ($file1 == $file2) ? true : false;
+	}
 
 	/**
 	 * Compare two Urls and check if they are equal or not
 	 *
 	 * @param mixed  $val1		The first url to compare
 	 * @param mixed  $val2		The second url to compare
+	 * @param string $algorithm The algorithm to use
 	 * @return bool true if the urls are equals or false if not
 	 */
 
-	public function compareUrls($url1, $url2){}
-  
-}
+	public function compareUrls($url1, $url2, $algorithm = ''){
+		if(!empty($algorithm)){
+			$this->setAlgo($algorithm);
+		}
 
+		$this->setValue($url1);
+		$url1 = $this->cifrateUrl();
+		$this->setValue($url2);
+		$url2 = $this->cifrateUrl();
+
+		return ($url1 == $url2) ? true : false;
+	}
+
+}
