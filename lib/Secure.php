@@ -344,9 +344,9 @@ class SecureHash {
 	/**
 	 * Compare two files and check if they are equal or not
 	 *
-	 * @param mixed  $file1		The first file to compare
-	 * @param mixed  $file2		The second file to compare
-	 * @param string $algorithm The algorithm to use
+	 * @param string  $file1		The first file to compare
+	 * @param string  $file2		The second file to compare
+	 * @param string  $algorithm 	The algorithm to use
 	 * @return bool true if the files are equals or false if not
 	 */
 
@@ -366,9 +366,9 @@ class SecureHash {
 	/**
 	 * Compare two Urls and check if they are equal or not
 	 *
-	 * @param mixed  $val1		The first url to compare
-	 * @param mixed  $val2		The second url to compare
-	 * @param string $algorithm The algorithm to use
+	 * @param string  $val1		 The first url to compare
+	 * @param string  $val2		 The second url to compare
+	 * @param string  $algorithm The algorithm to use
 	 * @return bool true if the urls are equals or false if not
 	 */
 

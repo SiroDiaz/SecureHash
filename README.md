@@ -75,7 +75,11 @@ Encrypt the content of multiple urls
 require 'Secure.php';
 use Secure\SecureHash as SH;
 
-$urls = array('http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js', 'http://code.jquery.com/jquery-2.1.1.min.js');
+$urls = array(
+	'http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+	'http://code.jquery.com/jquery-2.1.1.min.js'
+);
+
 $a = new SH('sha512')
 $cifratedUrls = $a->cifrateMultipleUrls($urls);	// returns an array with the data encripted
 var_dump($cifratedUrls);
